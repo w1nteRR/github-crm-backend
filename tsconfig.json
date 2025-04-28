@@ -18,8 +18,12 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@libs/*": ["src/libs/*"],
-      "@types/*": ["src/types/*"]
+      "@libs/*": [
+        "src/libs/*"
+      ],
+      "@custom-types/*": [
+        "src/custom-types/*"
+      ]
     }
   }
 }
