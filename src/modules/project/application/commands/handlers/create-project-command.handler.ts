@@ -3,7 +3,7 @@ import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { IGitHubProject } from '@custom-types/github/github.types';
 import { CreateProjectCommand } from '../create-project.command';
-import { GetProjectQuery } from '../../queries/get-project.query';
+import { FetchProjectQuery } from '../../queries/fetch-project.query';
 import { ProjectMapper } from '../../../project.mapper';
 import { PROJECT_REPOSITORY } from '../../../project-di.tokens';
 import { IProjectRepository } from '../../../domain/project.repository';
@@ -23,7 +23,7 @@ export class CreateProjectCommandHandler
 
   public async execute(command: CreateProjectCommand): Promise<void> {
     const gitHubProject: IGitHubProject = await this.queryBus.execute(
-      new GetProjectQuery(command.project_name),
+      new FetchProjectQuery(command.project_name),
     );
 
     const domainProject = this.mapper.fromGithubToDomain(gitHubProject);
