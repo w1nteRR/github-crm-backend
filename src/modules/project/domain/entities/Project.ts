@@ -6,6 +6,7 @@ import type {
   ICreateProjectProps,
   IProjectProps,
 } from '../../types/project.types';
+import { ProjectDeletedEvent } from '../events/project-deleted.event';
 
 export class Project extends AggregateRoot<IProjectProps> {
   protected _id: AggregateId;
@@ -21,5 +22,9 @@ export class Project extends AggregateRoot<IProjectProps> {
     project.addEvent(new ProjectCreatedEvent({ aggregateId: id, ...props }));
 
     return project;
+  }
+
+  public delete() {
+    this.addEvent(new ProjectDeletedEvent({ aggregateId: this._id }));
   }
 }
