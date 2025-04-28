@@ -22,12 +22,10 @@ export abstract class Entity<EntityProps> {
   }
 
   protected readonly props: EntityProps;
-
   protected abstract _id: AggregateId;
 
   private readonly _createdAt: Date;
-
-  private _updatedAt: Date;
+  private readonly _updatedAt: Date;
 
   get id(): AggregateId {
     return this.entityProps.id;
@@ -43,5 +41,14 @@ export abstract class Entity<EntityProps> {
 
   get updatedAt(): Date {
     return this.entityProps?.updated_at ?? new Date();
+  }
+
+  public getProps(): EntityProps {
+    return Object.freeze({
+      id: this.entityProps.id,
+      createdAt: this._createdAt,
+      updatedAt: this._updatedAt,
+      ...this.entityProps.props,
+    });
   }
 }
