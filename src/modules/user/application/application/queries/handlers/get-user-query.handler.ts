@@ -6,7 +6,9 @@ import { USER_REPOSITORY } from '../../../../user-di.tokens';
 import { GetUserQuery } from '../get-user.query';
 
 @QueryHandler(GetUserQuery)
-export class GetUserQueryHandler implements IQueryHandler<GetUserQuery> {
+export class GetUserQueryHandler
+  implements IQueryHandler<GetUserQuery, User | null>
+{
   constructor(
     @Inject(USER_REPOSITORY) private readonly userRepository: IUserRepository,
   ) {}

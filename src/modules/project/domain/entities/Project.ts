@@ -9,7 +9,7 @@ import type {
 import { ProjectDeletedEvent } from '../events/project-deleted.event';
 
 export class Project extends AggregateRoot<IProjectProps> {
-  protected _id: AggregateId;
+  protected readonly _id: AggregateId;
 
   public static create(payload: ICreateProjectProps): Project {
     const id: string = randomUUID();

@@ -7,13 +7,14 @@ import { GithubApiService } from '@libs/external/github/github-api.service';
 import { ProjectMapper } from './project.mapper';
 import { PROJECT_REPOSITORY } from './project-di.tokens';
 import { ProjectRepositoryImpl } from './infrastructure/project-repository.impl';
+import { PrismaService } from '@libs/external/prisma/prisma.service';
 
 const controllers = [ProjectController];
 const commandHandlers: Provider[] = [CreateProjectCommandHandler];
 const queryHandlers: Provider[] = [FetchProjectQueryHandler];
 const mappers: Provider[] = [ProjectMapper];
 
-const externalServices: Provider[] = [GithubApiService];
+const externalServices: Provider[] = [GithubApiService, PrismaService];
 
 const repositories = [
   { provide: PROJECT_REPOSITORY, useClass: ProjectRepositoryImpl },
