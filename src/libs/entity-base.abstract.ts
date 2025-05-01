@@ -2,8 +2,8 @@ export type AggregateId = string;
 
 export interface EntityProps {
   id: AggregateId;
-  created_at?: Date;
-  updated_at?: Date;
+  created_at?: Date | number;
+  updated_at?: Date | number;
 }
 
 export interface CreateEntityProps<T> extends EntityProps {
@@ -11,7 +11,7 @@ export interface CreateEntityProps<T> extends EntityProps {
 }
 
 export abstract class Entity<EntityProps> {
-  constructor(protected readonly entityProps: CreateEntityProps<EntityProps>) {
+  constructor(protected entityProps: CreateEntityProps<EntityProps>) {
     this.setId(entityProps.id);
     const now = new Date();
 
@@ -21,11 +21,11 @@ export abstract class Entity<EntityProps> {
     this.props = entityProps.props;
   }
 
-  protected readonly props: EntityProps;
+  protected props: EntityProps;
   protected abstract _id: AggregateId;
 
-  private readonly _createdAt: Date;
-  private readonly _updatedAt: Date;
+  private readonly _createdAt: Date | number;
+  private _updatedAt: Date | number;
 
   get id(): AggregateId {
     return this.entityProps.id;
@@ -36,11 +36,11 @@ export abstract class Entity<EntityProps> {
   }
 
   get createdAt(): Date {
-    return this.entityProps?.created_at ?? new Date();
+    return <Date>this.entityProps?.created_at ?? new Date();
   }
 
   get updatedAt(): Date {
-    return this.entityProps?.updated_at ?? new Date();
+    return <Date>this.entityProps?.updated_at ?? new Date();
   }
 
   public getProps(): EntityProps {
@@ -50,5 +50,10 @@ export abstract class Entity<EntityProps> {
       updatedAt: this._updatedAt,
       ...this.entityProps.props,
     });
+  }
+
+  protected setProps(newProps: EntityProps): void {
+    this.props = newProps;
+    this._updatedAt = new Date();
   }
 }
