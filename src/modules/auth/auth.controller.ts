@@ -6,6 +6,7 @@ import { AuthSignUpDto, authSignUpSchema } from './dto/auth-sign-up.schema';
 import { AuthSignInCommand } from './application/commands/auth-sign-in.command';
 import { AuthSignInDto, authSignInSchema } from './dto/auth-sign-in.schema';
 import { Tokens } from '@custom-types/jwt/token.types';
+import { RefreshTokenCommand } from './application/commands/refresh-token.command';
 
 @Controller('api/v1/auth')
 export class AuthController {
@@ -31,5 +32,18 @@ export class AuthController {
     );
 
     return { tokens };
+  }
+
+  @Post('refresh')
+  async refresh(
+    @Body() body: { refreshToken: string },
+  ): Promise<{ tokens: Tokens }> {
+    const tokens: Tokens = await this.commandBus.execute(
+      new RefreshTokenCommand(body.refreshToken),
+    );
+
+    return {
+      tokens,
+    };
   }
 }
