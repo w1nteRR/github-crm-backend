@@ -5,7 +5,7 @@ export interface IProjectProps {
   stars: number;
   forks: number;
   issues: number;
-  createdAt: Date;
+  created_at: number;
 }
 
 export interface ICreateProjectProps {
@@ -16,3 +16,16 @@ export interface ICreateProjectProps {
   forks: number;
   issues: number;
 }
+
+interface IBaseProjectOperationProps {
+  project_id: string;
+  user_id: string;
+}
+
+export type DeleteProjectProps = IBaseProjectOperationProps;
+export type GetProjectProps = IBaseProjectOperationProps;
+export type ProjectEditProps = IProjectProps & { id: string };
+
+export type ProjectList = Array<
+  IProjectProps & { id: string; user_id: string }
+>;
