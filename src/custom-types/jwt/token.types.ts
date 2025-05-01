@@ -21,3 +21,11 @@ export interface IJwtPayload {
   iat?: number;
   exp?: number;
 }
+
+export interface IRefreshToken {
+  id: string;
+  token: string;
+  created_at: Date;
+  expires_at: number;
+  revoked: boolean;
+}

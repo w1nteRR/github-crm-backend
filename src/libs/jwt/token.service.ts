@@ -11,10 +11,15 @@ export class TokenService {
   constructor(private readonly jwtService: JwtService) {}
 
   public generateAccessToken(payload: AccessTokenPayload): Token {
-    return this.jwtService.sign(payload, { expiresIn: '10m' });
+    //for dev
+    return this.jwtService.sign(payload, { expiresIn: '1h' });
   }
 
   public generateRefreshToken(payload: RefreshTokenPayload): Token {
     return this.jwtService.sign(payload, { expiresIn: '7d' });
+  }
+
+  public validateRefreshToken(token: Token): RefreshTokenPayload {
+    return this.jwtService.verify(token);
   }
 }
