@@ -15,7 +15,7 @@ export class GetProjectFromDbQueryHandler
   ) {}
 
   public async execute(query: GetProjectFromDbQuery): Promise<Project> {
-    const project = await this.projectRepository.findById(query.project_id);
+    const project = await this.projectRepository.findById(query);
 
     if (!project) throw new NotFoundException('Project not found');
 

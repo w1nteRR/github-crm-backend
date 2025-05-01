@@ -29,7 +29,7 @@ export class CreateProjectCommandHandler
     const domainProject = this.mapper.fromGithubToDomain(gitHubProject);
     const createdProject = Project.create(domainProject.getProps());
 
-    await this.projectRepository.save(createdProject);
+    await this.projectRepository.save(createdProject, command.user_id);
 
     await createdProject.publishEvents(this.eventEmitter);
   }

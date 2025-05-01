@@ -20,10 +20,13 @@ export class DeleteProjectCommandHandler
 
   public async execute(command: DeleteProjectCommand): Promise<void> {
     const project: Project = await this.queryBus.execute(
-      new GetProjectFromDbQuery(command.project_id),
+      new GetProjectFromDbQuery(command.project_id, command.user_id),
     );
 
-    await this.projectRepository.delete(project.id);
+    await this.projectRepository.delete({
+      project_id: project.id,
+      user_id: command.user_id,
+    });
 
     project.delete();
     await project.publishEvents(this.eventEmitter);
