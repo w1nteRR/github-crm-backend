@@ -15,4 +15,4 @@ RUN pnpm prisma generate
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dev"]
+CMD ["pnpm", "run", "start:dev"]

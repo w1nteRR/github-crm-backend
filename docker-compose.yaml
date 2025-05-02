@@ -25,7 +25,7 @@ services:
       - .env
     ports:
       - '3000:3000'
-    command: sh -c "pnpm prisma migrate deploy && pnpm run start:dev"
+    command: sh -c "pnpm prisma migrate dev && pnpm run start:dev"
     volumes:
       - .:/app
       - /app/node_modules
